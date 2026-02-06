@@ -59,6 +59,7 @@ class Window:
         pygame.quit()
 
 class Text:
+
     def __init__(self, text, position):
         self.text = text.upper()
         self.position = position
@@ -137,3 +138,9 @@ class Button:
             return
 
         self.func(self, event)
+
+class TextBox:
+
+    def __init__(self):
+        pass
+    
