@@ -19,7 +19,7 @@ def test_func(button, event):
 if __name__ == "__main__":
     config = get_config()
     window = Window(config)
-    b1 = Button("start mining", (32, 32), test_func, "green")
+    b1 = Button("start mining $", (32, 32), test_func, "green")
     # b2 = Button("testing", (0, 20), test_func, "red")
     window.add_element(b1)
     # window.add_element(b2)
