@@ -2,7 +2,7 @@
 
 - [ ] Make UI elements with Pygame
 - - [ ] Window
-- - [ ] Text
+- - [x] Text
 - - [x] Buttons
 
 - [ ] Mine with a single miner
