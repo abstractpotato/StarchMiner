@@ -88,7 +88,7 @@ class Button:
         self.hidden = True
 
     def show(self):
-        self.hidden = True
+        self.hidden = False
 
     def draw(self, window):
         if self.hidden:
@@ -143,4 +143,15 @@ class TextBox:
 
     def __init__(self):
         pass
-    
+
+    def hide(self):
+        self.hidden = True
+
+    def show(self):
+        self.hidden = False
+
+    def draw(self, window):
+        pass
+
+    def click(self, event):
+        pass
