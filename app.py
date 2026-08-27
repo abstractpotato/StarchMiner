@@ -1,0 +1,42 @@
+import requests, json, time
+from hashlib import sha256
+
+host = "https://api.starch.one"
+miner_ids = ["78B24331", "56SI1M0W", "6WM3A0MQ", "TATERIZE"]
+color = "#FEE600" #custom color
+
+def get_last_block():
+    try:
+        return json.loads(requests.get(f"{host}/blockchain/last_block").text)
+    except Exception as e:
+        print(e)
+        return {}
+
+def solve(miner_id, last_block):
+    last_hash = last_block["hash"]
+    string = f'{last_hash} {miner_id} {color}'
+    new_hash = sha256(string.encode()).hexdigest()
+    return {"hash": new_hash, "miner_id": miner_id, "color": color}
+
+def submit_blocks(blocks):
+    try:
+        data = {"blocks": blocks}
+        return json.loads(requests.post(f"{host}/submit_blocks", json=data).text)
+    except Exception as e:
+        print(e)
+
+def mine():
+    last_block = get_last_block()
+    if last_block == {}:
+        return
+
+    blocks = []
+    for miner_id in miner_ids:
+        blocks.append(solve(miner_id, last_block))
+    submit_blocks(blocks)
+
+print(f"pytater mini : mining for {miner_ids} : with {color}")
+
+while True:
+    mine()
+    time.sleep(49)
