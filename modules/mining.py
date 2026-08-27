@@ -53,16 +53,20 @@ def mine(miners=[], companies=[]):
         
 def mine_loop(miners=[], companies=[]):
     while True:
-        last_timestamp = api.get_last_timestamp()
-        status = api.get_blockchain_status()
-        log(f"blockchain tip: {last_timestamp['block_id']}")
-        log(f"blockchain halvings: {status['halving_count']}")
-        log(f"blockchain progress: {status['progress']:,}/215,000")
-        log(f"blockchain rewards: {status['rewards']:,} STRCH")
+        try:
+            last_timestamp = api.get_last_timestamp()
+            status = api.get_blockchain_status()
+            log(f"blockchain tip: {last_timestamp['block_id']}")
+            log(f"blockchain halvings: {status['halving_count']}")
+            log(f"blockchain progress: {status['progress']:,}/215,000")
+            log(f"blockchain rewards: {status['rewards']:,} STRCH")
+            
+            mine(miners, companies)
+            wait_time = last_timestamp["current_timestamp"] - last_timestamp["timestamp"]
+            if wait_time > 147:
+                wait_time = 5
+            log(f"waiting {wait_time}s for the next block...")
+            sleep(wait_time)
+        except Exception as e:
+            log(f'Error: {e}', "error") 
         
-        mine(miners, companies)
-        wait_time = last_timestamp["current_timestamp"] - last_timestamp["timestamp"]
-        if wait_time > 147:
-            wait_time = 5
-        log(f"waiting {wait_time}s for the next block...")
-        sleep(wait_time)
