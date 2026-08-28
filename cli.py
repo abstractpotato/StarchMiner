@@ -1,5 +1,5 @@
-from modules.miner import miner_cmd, miner_help
-from modules.company import company_cmd, company_help
+from commands.miner import miner_cmd, miner_help
+from commands.company import company_cmd, company_help
 import sys
 
 def help_cmd(cmd=[]):
