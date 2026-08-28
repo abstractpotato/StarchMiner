@@ -3,6 +3,9 @@ from modules.logging import log
 from time import sleep
 from random import randint
 from hashlib import sha256
+from json import loads
+
+# helper functions =============================================================
 
 def get_color():
     random_number = randint(0, 16777215)
@@ -29,7 +32,18 @@ def get_mempool_attendance(mempool):
     for x in mempool:
         miners.append(x["miner_id"])
     return miners
-    
+
+def get_config_data(file_path):
+    try:
+        file = open(file_path, "r")
+        config = loads(file.read())
+        return config
+    except Exception as e:
+        log(f'config error: {e}')
+        return {}
+
+# main functions ===============================================================
+
 def mine(miners=[], companies=[]):
     miners = miners + get_company_miners(companies)
     last_hash = api.get_last_hash()
@@ -69,4 +83,32 @@ def mine_loop(miners=[], companies=[]):
             sleep(wait_time)
         except Exception as e:
             log(f'Error: {e}', "error") 
-        
+    
+def mine_config(file_path):
+    while True:
+        log(f"loading from '{file_path}'")
+        config = get_config_data(file_path)
+        miners = []
+        companies = []
+        if "miners" in config:
+            miners = config["miners"]
+        if "companies" in config:
+            companies = config["companies"]
+
+        try:
+            last_timestamp = api.get_last_timestamp()
+            status = api.get_blockchain_status()
+            log(f"blockchain tip: {last_timestamp['block_id']}")
+            log(f"blockchain halvings: {status['halving_count']}")
+            log(f"blockchain progress: {status['progress']:,}/215,000")
+            log(f"blockchain rewards: {status['rewards']:,} STRCH")
+            
+            mine(miners, companies)
+            wait_time = last_timestamp["current_timestamp"] - last_timestamp["timestamp"]
+            if wait_time > 147:
+                wait_time = 5
+            log(f"waiting {wait_time}s for the next block...")
+            sleep(wait_time)
+        except Exception as e:
+            log(f'Error: {e}', "error") 
+    
