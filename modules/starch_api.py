@@ -18,7 +18,11 @@ def get_mempool():
 def get_last_block():
     r = requests.get(f"{host}/blockchain/last_block")
     return json.loads(r.text)
-    
+
+def get_block(block_id):
+    r = requests.get(f"{host}/blockchain/id/{block_id}")
+    return json.loads(r.text)
+
 def get_last_hash():
     r = requests.get(f"{host}/blockchain/last_hash")
     return json.loads(r.text)["hash"]

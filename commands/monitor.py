@@ -9,15 +9,26 @@ def monitor_help():
     # print("monitor <company_id> -> view the company activity")
     # print("monitor <miner_id>   -> view miner activity")
     
+def log_block(tip):
+    full_block = api.get_block(tip)
+    
+    string = ""
+    string += f'[tip:{tip}|' 
+    string += f'hash:{full_block["hash"][:4]}...{full_block["hash"][-4:]}|'
+    string += f'miner:{full_block["miner_id"]}|'
+    string += f'color:{full_block["color"]}|'
+    string += f'online:{len(full_block["attendance"])}]'
+    log(string)
+    
 def view_blockchain():
-    last_hash = ""
+    tip = 0
     
     while True:
         try:
             block = api.get_last_block()
-            if last_hash != block["hash"]:
-                last_hash = block["hash"]
-                log(block)
+            if block["block_id"] != tip:
+                tip = block["block_id"]
+                log_block(tip)
         except Exception as e:
             log(f'Error {e}', "error")
         sleep(14.7)
