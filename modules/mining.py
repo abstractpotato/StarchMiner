@@ -38,7 +38,7 @@ def get_config_data(file_path):
         file = open(file_path, "r")
         config = loads(file.read())
         return config
-    store Exception as e:
+    except Exception as e:
         log(f'config error: {e}', "error")
         return {}
 
