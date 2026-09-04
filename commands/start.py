@@ -7,13 +7,11 @@ def start_help():
     print("start <companies or miners> -> starts miners and companies")
     print("start <*.json>              -> starts from config file")
     
-    
 def start_cmd(cmd):
     if len(cmd) == 0:
         print("- no ids in command -")
         start_help()
         return
-    
     
     if ".json" in cmd[0]:
         mine_config(cmd[0])

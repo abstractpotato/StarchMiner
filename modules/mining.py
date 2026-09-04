@@ -76,7 +76,7 @@ def mine_loop(miners=[], companies=[]):
             log(f"blockchain rewards: {status['rewards']:,} STRCH")
             
             mine(miners, companies)
-            wait_time = last_timestamp["current_timestamp"] - last_timestamp["timestamp"]
+            wait_time = last_timestamp["current_timestamp"] - last_timestamp["timestamp"] - 5
             if wait_time > 147:
                 wait_time = 5
             log(f"waiting {wait_time}s for the next block...")
