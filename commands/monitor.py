@@ -13,12 +13,12 @@ def log_block(tip):
     full_block = api.get_block(tip)
     
     string = ""
-    string += f'[tip:{tip}|' 
-    string += f'hash:{full_block["hash"][:4]}...{full_block["hash"][-4:]}|'
-    string += f'miner:{full_block["miner_id"]}|'
-    string += f'color:{full_block["color"]}|'
+    string += f'[tip:{tip} ' 
+    string += f'hash:{full_block["hash"][:4]}...{full_block["hash"][-4:]} '
+    string += f'miner:{full_block["miner_id"]} '
+    # string += f'color:{full_block["color"]}|'
     string += f'online:{len(full_block["attendance"])}]'
-    log(string)
+    log(string, condensed=True)
     
 def view_blockchain():
     tip = 0
