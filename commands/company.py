@@ -5,8 +5,6 @@ def company_help():
     print("# can use 'c' instead of company")
     print("company mine <company_ids> -> mine all members of these companies")
     
-    
-    
 def company_cmd(cmd):
     if len(cmd) == 0:
         print("- no company command chosen -")

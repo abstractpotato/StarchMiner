@@ -1,6 +1,7 @@
 from commands.miner import miner_cmd, miner_help
 from commands.company import company_cmd, company_help
 from commands.start import start_cmd, start_help
+from commands.monitor import monitor_cmd, monitor_help
 import sys
 
 def help_cmd(cmd=[]):
@@ -9,6 +10,7 @@ def help_cmd(cmd=[]):
     start_help()
     miner_help()
     company_help()
+    monitor_help()
 
 commands = {}
 commands["h"] = help_cmd
@@ -19,6 +21,8 @@ commands["m"] = miner_cmd
 commands["miner"] = miner_cmd
 commands["c"] = company_cmd
 commands["company"] = company_cmd
+commands["mt"] = monitor_cmd
+commands["monitor"] = monitor_cmd
 
 cmd = sys.argv[1:]
 
