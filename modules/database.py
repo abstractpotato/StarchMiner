@@ -15,7 +15,7 @@ class Database:
     def get_connection(self):
         connection = None
         try:
-            connection = sqlite3.connect(f'database/{self.file}.db')
+            connection = sqlite3.connect(f'{self.file}.db')
         except Error as e:
             self.log_error(e, traceback.format_exc())
         return connection

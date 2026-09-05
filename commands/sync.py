@@ -9,6 +9,8 @@ def sync_help():
     print("sync -> create a local copy of the blockchain")
     
 def sync_to_db():
-    
-    
+    pass
     # check where the blockchain is
+    
+def sync_cmd(cmd):
+    pass
