@@ -4,7 +4,7 @@ from time import sleep
 
 def monitor_help():
     print("-------------------------------------------------------------------")
-    print("# can use 'mt' instead of start")
+    print("# can use 'mt' instead of monitor")
     print("monitor -> view the blockchain")
     # print("monitor <company_id> -> view the company activity")
     # print("monitor <miner_id>   -> view miner activity")
