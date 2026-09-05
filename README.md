@@ -16,7 +16,7 @@ miner <miner_id>        -> print miner miner snapshot
 # can use 'c' instead of company
 company mine <company_ids> -> mine all members of these companies
 -------------------------------------------------------------------
-# can use 'mt' instead of start
+# can use 'mt' instead of monitor
 monitor -> view the blockchain
 ```
 
