@@ -49,7 +49,7 @@ def mine(miners=[], companies=[]):
     last_hash = api.get_last_hash()
     mempool = api.get_mempool()
     attendance = get_mempool_attendance(mempool)
-    
+
     blocks = []
     for miner in miners:
         if miner not in attendance:
@@ -58,13 +58,13 @@ def mine(miners=[], companies=[]):
             blocks.append(block)
         else:
             log(f"block exists for '{miner}'")
-    
+
     result = api.submit_blocks(blocks)
     if len(result) == 0:
         log(f"blocks submitted: {len(result)}")
     else:
         log(f"blocks submitted: {len(result)}", "success")
-        
+
 def mine_loop(miners=[], companies=[]):
     while True:
         try:
@@ -74,7 +74,7 @@ def mine_loop(miners=[], companies=[]):
             log(f"blockchain halvings: {status['halving_count']}")
             log(f"blockchain progress: {status['progress']:,}/215,000")
             log(f"blockchain rewards: {status['rewards']:,} STRCH")
-            
+
             mine(miners, companies)
             wait_time = last_timestamp["current_timestamp"] - last_timestamp["timestamp"] - 5
             if wait_time > 147:
@@ -82,27 +82,28 @@ def mine_loop(miners=[], companies=[]):
             log(f"waiting {wait_time}s for the next block...")
             sleep(wait_time)
         except Exception as e:
-            log(f'Error: {e}', "error") 
-    
+            log(f'Error: {e}', "error")
+            sleep(60)
+
 def mine_config(file_path):
     while True:
-        log(f"loading from '{file_path}'")
-        config = get_config_data(file_path)
-        miners = []
-        companies = []
-        if "miners" in config:
-            miners = config["miners"]
-        if "companies" in config:
-            companies = config["companies"]
-
         try:
+            log(f"loading from '{file_path}'")
+            config = get_config_data(file_path)
+            miners = []
+            companies = []
+            if "miners" in config:
+                miners = config["miners"]
+            if "companies" in config:
+                companies = config["companies"]
+
             last_timestamp = api.get_last_timestamp()
             status = api.get_blockchain_status()
             log(f"blockchain tip: {last_timestamp['block_id']}")
             log(f"blockchain halvings: {status['halving_count']}")
             log(f"blockchain progress: {status['progress']:,}/215,000")
             log(f"blockchain rewards: {status['rewards']:,} STRCH")
-            
+
             mine(miners, companies)
             wait_time = last_timestamp["current_timestamp"] - last_timestamp["timestamp"] - 5
             if wait_time > 147:
@@ -110,5 +111,5 @@ def mine_config(file_path):
             log(f"waiting {wait_time}s for the next block...")
             sleep(wait_time)
         except Exception as e:
-            log(f'Error: {e}', "error") 
-    
+            log(f'Error: {e}', "error")
+            sleep(30)
